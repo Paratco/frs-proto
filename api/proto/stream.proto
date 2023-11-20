@@ -1,0 +1,28 @@
+syntax = "proto3";
+package frs.proto.api.stream;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message InitStreamRequest {
+  string token = 1;
+  uint32 camera = 2;
+  bool events = 3;
+}
+
+message InitStreamResponse {
+  common.ErrorCodes code = 1;
+  string token = 2;
+}
+
+service StreamAPI {
+  rpc init (InitStreamRequest) returns (InitStreamResponse) {}
+}

@@ -1,0 +1,75 @@
+syntax = "proto3";
+package frs.proto.api.camera;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message Cam {
+  uint32 id = 1;
+  string name = 2;
+  string comment = 3;
+  bool active = 4;
+  string address = 5;
+  string onvifPath = 6;
+  string username = 7;
+  string password = 8;
+  optional int32 quality = 9;
+  optional int32 distanceTh = 10;
+}
+
+message GetAllResponse {
+  common.ErrorCodes code = 1;
+  repeated Cam cams = 2;
+}
+
+message AddRequest {
+  string token = 1;
+  string name = 2;
+  string address = 3;
+  string onvifPath = 4;
+  string username = 5;
+  string password = 6;
+  string comment = 7;
+  bool active = 8;
+  int32 quality = 9;
+  int32 distanceTh = 10;
+}
+
+message AddResponse {
+  common.ErrorCodes code = 1;
+  uint32 id = 2;
+}
+
+message EditRequest {
+  string token = 1;
+  uint32 id = 2;
+  optional string name = 3;
+  optional string address = 4;
+  optional string onvifPath = 5;
+  optional string username = 6;
+  optional string password = 7;
+  optional string comment = 8;
+  optional bool active = 9;
+  optional int32 quality = 10;
+  optional int32 distanceTh = 11;
+}
+
+message DeleteRequest {
+  string token = 1;
+  uint32 id = 2;
+}
+
+service CameraAPI {
+  rpc getAll (common.EmptyRequest) returns (GetAllResponse) {}
+  rpc add (AddRequest) returns (AddResponse) {}
+  rpc edit (EditRequest) returns (common.EmptyResponse) {}
+  rpc delete (DeleteRequest) returns (common.EmptyResponse) {}
+}

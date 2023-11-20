@@ -1,0 +1,48 @@
+syntax = "proto3";
+package frs.proto.api.auth;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message ChangePasswordRequest {
+  string token = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}
+
+message LoginResponse {
+  common.ErrorCodes code = 1;
+  string token = 2;
+  int32 maxAge = 3;
+  Permissions permissions = 4;
+}
+
+message Permissions {
+  bool isAdmin = 1;
+  bool camera = 2;
+  bool wall = 3;
+  bool event = 4;
+  bool eventDetails = 5;
+  bool subject = 6;
+  bool report = 7;
+  bool imageProcessing = 8;
+  bool videoProcessing = 9;
+}
+
+service AuthAPI {
+  rpc login (LoginRequest) returns (LoginResponse) {}
+  rpc changePassword (ChangePasswordRequest) returns (LoginResponse) {}
+}

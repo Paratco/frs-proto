@@ -1,0 +1,137 @@
+syntax = "proto3";
+package frs.proto.api.subject;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message Subject {
+  uint64 id = 1;
+  string name = 2;
+  string lastName = 3;
+  string nationalId = 4;
+  string orgId = 5;
+  string bestImage = 6;
+  bool marked = 7;
+  repeated string images = 8;
+}
+
+message FilterRequest {
+  string token = 1;
+  optional string name = 2;
+  optional string lastName = 3;
+  optional string nationalId = 4;
+  optional string orgId = 5;
+  optional bool marked = 6;
+  int32 limit = 7;
+  int32 page = 8;
+}
+
+message FilterResponse {
+  common.ErrorCodes code = 1;
+  uint32 totalItems = 2;
+  repeated Subject subjects = 3;
+}
+
+message AddRequest {
+  string token = 1;
+  string name = 2;
+  string lastName = 3;
+  string nationalId = 4;
+  string orgId = 5;
+  optional bool noCache = 6;
+  bool marked = 7;
+  bytes photo = 8;
+}
+
+message AddResponse {
+  common.ErrorCodes code = 1;
+  uint64 id = 2;
+}
+
+/*
+message AddProcessedRequest {
+  string token = 1;
+  string name = 2;
+  string lastName = 3;
+  string nationalId = 4;
+  string orgId = 5;
+  optional bool noCache = 6;
+  bool marked = 7;
+  bytes photo = 8;
+}
+
+message AddProcessedResponse {
+  common.ErrorCodes code = 1;
+  int32 id = 2;
+}
+ */
+
+message DeleteRequest {
+  string token = 1;
+  uint64 id = 2;
+}
+
+message UpdateRequest {
+  string token = 1;
+  uint64 id = 2;
+  optional string name = 3;
+  optional string lastName = 4;
+  optional string nationalId = 5;
+  optional string orgId = 6;
+  optional bool marked = 7;
+}
+
+message GetRequest {
+  string token = 1;
+  uint64 id = 2;
+}
+
+message GetResponse {
+  common.ErrorCodes code = 1;
+  optional Subject subject = 2;
+}
+
+message AddImageRequest {
+  string token = 1;
+  uint64 id = 2;
+  bytes photo = 3;
+}
+
+message AddImageResponse {
+  common.ErrorCodes code = 1;
+  string imageId = 2;
+}
+
+message DeleteImageRequest {
+  string token = 1;
+  uint64 id = 2;
+  string imageId = 3;
+}
+
+message UpdateImageRequest {
+  string token = 1;
+  uint64 id = 2;
+  string imageId = 3;
+  bytes photo = 4;
+}
+
+
+service SubjectAPI {
+  rpc filter (FilterRequest) returns (FilterResponse) {}
+  rpc add (AddRequest) returns (AddResponse) {}
+  //rpc addProcessed (AddProcessedRequest) returns (AddProcessedResponse) {}
+  rpc delete (DeleteRequest) returns (common.EmptyResponse) {}
+  rpc update (UpdateRequest) returns (common.EmptyResponse) {}
+  rpc get (GetRequest) returns (GetResponse) {}
+  rpc addImage (AddImageRequest) returns (AddImageResponse) {}
+  rpc deleteImage (DeleteImageRequest) returns (common.EmptyResponse) {}
+  rpc updateImage (UpdateImageRequest) returns (common.EmptyResponse) {}
+}

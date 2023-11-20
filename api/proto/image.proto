@@ -1,0 +1,36 @@
+syntax = "proto3";
+package frs.proto.api.image;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message CommonImage {
+  string token = 1;
+  string imageId = 2;
+}
+
+message ImageProcess {
+  string token = 1;
+  uint64 jobId = 2;
+  string imageId = 3;
+}
+
+message ImageResponse {
+  common.ErrorCodes code = 1;
+  bytes bytes = 2;
+}
+
+service ImageAPI {
+  rpc subject (CommonImage) returns (ImageResponse) {}
+  rpc subjectFace (CommonImage) returns (ImageResponse) {}
+  rpc subjectFrame (CommonImage) returns (ImageResponse) {}
+  rpc imageProcessing (ImageProcess) returns (ImageResponse) {}
+}

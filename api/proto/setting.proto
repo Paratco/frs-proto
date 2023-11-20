@@ -1,0 +1,31 @@
+syntax = "proto3";
+package frs.proto.api.setting;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message UpdateThresholdsRequest {
+  string token = 1;
+  float withMask = 2;
+  float withoutMask = 3;
+}
+
+message GetThresholdsResponse {
+  common.ErrorCodes code = 1;
+  float withMask = 2;
+  float withoutMask = 3;
+}
+
+service SettingAPI {
+  rpc restart (common.EmptyRequest) returns (common.EmptyResponse) {}
+  rpc getThresholds (common.EmptyRequest) returns (GetThresholdsResponse) {}
+  rpc updateThresholds (UpdateThresholdsRequest) returns (common.EmptyResponse) {}
+}

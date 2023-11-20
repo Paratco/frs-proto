@@ -1,0 +1,50 @@
+syntax = "proto3";
+package frs.proto.api.report;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+import "common.proto";
+
+message Report {
+  string name = 1;
+  string lastName = 2;
+  string orgId = 3;
+  string nationalId = 4;
+  bool marked = 5;
+  string bestImage = 6;
+  string frameId = 7;
+  uint64 dateTime = 8;
+  double similarity = 9;
+  string location = 10;
+}
+
+message GetAllRequest {
+  string token = 1;
+  uint64 fromDate = 2;
+  uint64 toDate = 3;
+  optional int32 page = 4;
+  optional int32 limit = 5;
+  optional string name = 6;
+  optional string lastName = 7;
+  optional string nationalId = 8;
+  optional string orgId = 9;
+  optional bool marked = 10;
+  optional string location = 11;
+}
+
+message GetAllResponse {
+  common.ErrorCodes code = 1;
+  uint32 totalItems = 2;
+  repeated Report reports = 3;
+}
+
+service ReportAPI {
+  rpc getAll (GetAllRequest) returns (GetAllResponse) {}
+}

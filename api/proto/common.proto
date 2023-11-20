@@ -1,0 +1,69 @@
+syntax = "proto3";
+package frs.proto.common;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.grpc";
+option java_outer_classname = "FrsProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.Client.Grpc";
+
+enum ErrorCodes {
+  // CommonCodes (range 0-99)
+  Success = 0;
+  BadInput = 1;
+  Internal = 2;
+  UnAuthorized = 3;
+  License = 4;
+  Forbidden = 5;
+  NotFound = 6;
+  reserved 7 to 99;
+
+  // AuthCodes (range 100-199)
+  BadUser = 100;
+  BadOldPass = 101;
+  reserved 102 to 199;
+
+  // SubjectCodes (range 200-299)
+  SubjectNotFound = 200;
+  ImageNotProvided = 201;
+  NoFace = 202;
+  TooManyFaces = 203;
+  FaceIsTooSmall = 204;
+  FaceIsNotGood = 205;
+  ImageNotFound = 206;
+  OneImageRemains = 207;
+  reserved 208 to 299;
+
+  // StreamCodes (range 300-399)
+  CameraDisabled = 300;
+  reserved 301 to 399;
+
+  // StreamCodes (range 400-499)
+  CameraNotExist = 400;
+  CameraAddressNotValid = 401;
+  reserved 402 to 499;
+
+  // UserCodes (range 500-599)
+  UserExists = 500;
+  UserNotExists = 501;
+  reserved 502 to 599;
+
+  // OPCodes (range 600-699)
+  ImageNoValid = 600;
+  JobNotExist = 601;
+  JobNotFinished = 602;
+  reserved 603 to 699;
+}
+
+message EmptyResponse {
+  ErrorCodes code = 1;
+}
+
+message EmptyRequest {
+  string token = 1;
+}
+
+message EmptyRequestNoToken {}
