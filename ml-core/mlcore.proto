@@ -1,0 +1,63 @@
+syntax = "proto3";
+package frs.proto.mlCore;
+
+option optimize_for = SPEED;
+
+option java_multiple_files = true;
+option java_package = "paratco.frs.mlCore.grpc";
+option java_outer_classname = "FrsMLCoreProto";
+option java_generate_equals_and_hash = true;
+
+option csharp_namespace = "Frs.MLCore.Grpc";
+
+enum FacePlugins {
+  CALCULATOR = 0;
+  POSE = 1;
+  LANDMARKS = 2;
+  MASK = 3;
+}
+
+message MLCoreBox {
+  double probability = 1;
+  uint32 xMin = 2;
+  uint32 xMax = 3;
+  uint32 yMin = 4;
+  uint32 yMax = 5;
+  uint32 width = 6;
+  uint32 height = 7;
+}
+
+message MLCoreTime {
+  optional uint32 detector = 1;
+  optional uint32 calculator = 2;
+  optional uint32 pose = 3;
+  optional uint32 mask = 4;
+}
+
+message MLCorePose {
+  double pitch = 1;
+  double yaw = 2;
+  double roll = 3;
+}
+
+message FaceFeatures {
+  MLCoreBox box = 1;
+  MLCoreTime times = 2;
+  repeated float embedding = 3;
+  optional MLCorePose pose = 4;
+  optional float mask = 5;
+}
+
+message ProcessFacesRequest {
+  bytes file = 1;
+  repeated FacePlugins plugins = 2;
+  uint32 max_dist_th = 3;
+}
+
+message ProcessFacesResponse {
+  repeated FaceFeatures response = 1;
+}
+
+service MLCore {
+  rpc processFaces (ProcessFacesRequest) returns (ProcessFacesResponse);
+}
