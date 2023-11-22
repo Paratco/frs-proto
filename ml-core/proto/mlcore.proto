@@ -19,12 +19,10 @@ enum FacePlugins {
 
 message MLCoreBox {
   double probability = 1;
-  uint32 xMin = 2;
-  uint32 xMax = 3;
-  uint32 yMin = 4;
-  uint32 yMax = 5;
-  uint32 width = 6;
-  uint32 height = 7;
+  uint32 x = 2;
+  uint32 y = 3;
+  uint32 width = 4;
+  uint32 height = 5;
 }
 
 message MLCoreTime {
