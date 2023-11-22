@@ -28,4 +28,5 @@ service SettingAPI {
   rpc restart (common.EmptyRequest) returns (common.EmptyResponse) {}
   rpc getThresholds (common.EmptyRequest) returns (GetThresholdsResponse) {}
   rpc updateThresholds (UpdateThresholdsRequest) returns (common.EmptyResponse) {}
+  rpc checkHealth (common.EmptyRequestNoToken) returns (common.EmptyResponse) {}
 }
