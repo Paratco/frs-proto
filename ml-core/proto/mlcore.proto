@@ -56,6 +56,11 @@ message ProcessFacesResponse {
   repeated FaceFeatures response = 1;
 }
 
+message CheckHealthRequest {}
+
+message CheckHealthResponse {}
+
 service MLCore {
   rpc processFaces (ProcessFacesRequest) returns (ProcessFacesResponse);
+  rpc checkHealth (CheckHealthRequest) returns (CheckHealthResponse);
 }
