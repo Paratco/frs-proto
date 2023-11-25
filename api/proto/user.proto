@@ -25,7 +25,8 @@ message Permissions {
 
 message User {
   string username = 1;
-  Permissions permissions = 2;
+  bool enable = 2;
+  Permissions permissions = 3;
 }
 
 message GetAllResponse {
@@ -36,7 +37,8 @@ message GetAllResponse {
 message AddRequest {
   string token = 1;
   string username = 2;
-  Permissions permissions = 3;
+  bool enable = 3;
+  Permissions permissions = 4;
 }
 
 message DeleteRequest {
@@ -47,7 +49,8 @@ message DeleteRequest {
 message UpdateRequest {
   string token = 1;
   string username = 2;
-  Permissions permissions = 3;
+  bool enable = 3;
+  Permissions permissions = 4;
 }
 
 message ResetRequest {
