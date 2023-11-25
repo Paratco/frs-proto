@@ -24,7 +24,8 @@ enum ErrorCodes {
   // AuthCodes (range 100-199)
   BadUser = 100;
   BadOldPass = 101;
-  reserved 102 to 199;
+  UserDisabled = 102;
+  reserved 103 to 199;
 
   // SubjectCodes (range 200-299)
   SubjectNotFound = 200;
